@@ -1,7 +1,8 @@
 <?php $this->load->view('kasir/components/header'); ?>
 <?php $this->load->view('kasir/components/navbar'); ?>
-<?php $this->load->view('kasir/components/sidebar'); ?>
 
+<?php $active = 'dashboard'; ?>
+<?php $this->load->view('kasir/components/sidebar', compact('active')); ?>
 <div class="layout">
 <div class="main">
 
@@ -18,11 +19,8 @@
     min-height: 100vh;
 }
 /* BACKGROUND */
-.main {
-    padding: 30px;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
-}
+
+
 
 /* TITLE */
 .title {
@@ -126,7 +124,7 @@
 
 </style>
 
-<h2 class="title">Dashboard Kasir</h2>
+<br>
 
 <!-- 🔥 CARD -->
 <div class="card-container">
@@ -157,19 +155,38 @@
 <div class="section">
 
     <!-- MAP -->
-    <div class="box map-box">
-        <h4>Lokasi Pesanan (Hari ini)</h4>
+   <div class="box map-box">
+    <h4>Lokasi Pesanan (Hari ini)</h4>
 
-        <?php foreach($transaksi as $t): ?>
-            <iframe 
-                src="https://www.google.com/maps?q=<?= urlencode($t->lokasi) ?>&output=embed"
-                width="100%" height="150"
-                style="border-radius:10px; margin-bottom:10px;">
-            </iframe>
-        <?php endforeach; ?>
+    <?php if(!empty($transaksi)): 
+        $t = $transaksi[0];
+    ?>
 
-        <button class="btn">View All Location</button>
-    </div>
+        <iframe 
+            src="https://www.google.com/maps?q=<?= urlencode($t->lokasi) ?>&output=embed"
+            width="100%" height="250"
+            style="border-radius:15px;">
+        </iframe>
+
+        <p style="margin-top:10px; font-weight:600;">
+            📍 <?= $t->nama_paket ?> - <?= $t->lokasi ?>
+        </p>
+
+    <?php else: ?>
+
+        <iframe 
+            src="https://www.google.com/maps?q=Subang&output=embed"
+            width="100%" height="250"
+            style="border-radius:15px;">
+        </iframe>
+
+        <p style="margin-top:10px;">
+            Tidak ada pesanan hari ini
+        </p>
+
+    <?php endif; ?>
+
+</div>
 
     <!-- 📅 KALENDER -->
     <div class="box calendar-box">

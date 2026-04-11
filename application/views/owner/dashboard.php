@@ -1,17 +1,14 @@
 <?php $this->load->view('owner/components/header'); ?>
 <?php $this->load->view('owner/components/navbar'); ?>
-<?php $this->load->view('owner/components/sidebar'); ?>
+<?php $active = 'dashboard'; ?>
+<?php $this->load->view('owner/components/sidebar', compact('active')); ?>
 
 <div class="main">
 
 <style>
 
 /* BACKGROUND */
-.main {
-    padding: 30px;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
-}
+
 
 /* TITLE */
 .title {
@@ -97,7 +94,7 @@
 
 </style>
 
-<h2 class="title">Dashboard Owner</h2>
+<br>
 
 <!-- 🔥 CARD -->
 <div class="card-container">

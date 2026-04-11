@@ -71,25 +71,27 @@
 }
 
 /* 🔥 BULAT SAMPING (EFEK Figma curve) */
-/* .menu.active::before {
+.menu.active::before {
     content: '';
     position: absolute;
-    left: -15px;
+    right: -15px; /* 🔥 pindah ke kanan */
     top: 0;
     width: 30px;
     height: 100%;
     background: white;
-    border-radius: 0 30px 30px 0;
-} */
+    border-radius: 30px 0 0 30px; /* 🔥 dibalik */
+}
 
 /* 🔥 LOGOUT */
 .logout {
     position: absolute;
-    bottom: 30px;
+    bottom: 170px;
     width: 65%;
     background: #3B6FB6;
     text-align: center;
     justify-content: center;
+	 margin-left: 15px; 
+	
 }
 
 /* CONTENT */
@@ -138,7 +140,7 @@
     </a>
 
     <!-- 🔥 LOGOUT -->
-    <a href="<?= base_url('auth/logout') ?>" class="menu logout">
+    <a href="<?= base_url('login/logout') ?>" class="menu logout">
         <i class="fa fa-sign-out-alt"></i> Logout
     </a>
 

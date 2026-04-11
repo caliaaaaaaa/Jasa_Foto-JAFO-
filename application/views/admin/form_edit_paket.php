@@ -5,6 +5,18 @@
 <?php $this->load->view('admin/components/sidebar', compact('active')); ?>
 <style>
 
+/* DESKRIPSI BIAR BESAR */
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* OPTIONAL: BIAR LEBIH PROPORSIONAL */
+.input-group textarea {
+    padding: 12px;
+    line-height: 1.5;
+}
+
 .form-container {
     background: white;
     padding: 30px;
@@ -45,11 +57,34 @@
 .upload-box {
     border: 2px dashed #ccc;
     border-radius: 15px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+    height: auto; /* penting */
+}
+
+.upload-box:hover {
+    border-color: #3B6FB6;
+    background: #f9fbff;
+}
+
+.upload-box p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.upload-box input {
+    margin-top: 10px;
+}
+
+.upload-box button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #3B6FB6;
+    color: white;
+    cursor: pointer;
 }
 
 /* BUTTON */
@@ -131,20 +166,16 @@ function previewGambar(event) {
         </div>
 
         <!-- UPLOAD -->
-      <div class="input-group">
-            <label>Upload Gambar</label>
-
-            <div class="upload-box">
-                <p>Drag & Drop Image</p>
-                
-                <!-- INPUT FILE -->
-                <input type="file" name="gambar" id="gambarInput" onchange="previewGambar(event)">
-                
-                <button type="button" onclick="document.getElementById('gambarInput').click()">
-                    Pilih Gambar
-                </button>
-            </div>
-        </div>
+   <div class="input-group">
+                        <label>Foto Paket</label>
+                        <div class="upload-box">
+                            <p>Format: JPG, PNG, WEBP </p>
+                            <input type="file" name="gambar" id="gambarInput" onchange="previewGambar(event)" style="display:none;">
+                            <button type="button" class="btn-upload-custom" onclick="document.getElementById('gambarInput').click()">
+                                <i class="fa fa-cloud-upload"></i> Pilih Gambar
+                            </button>
+                        </div>
+                    </div>
 
         <!-- DESKRIPSI -->
         <div class="input-group">
@@ -152,6 +183,8 @@ function previewGambar(event) {
             <textarea name="deskripsi"><?= $paket->deskripsi ?></textarea>
         </div>
 
+
+		
     </div>
 
     <!-- KANAN -->
@@ -168,13 +201,7 @@ function previewGambar(event) {
         </div>
 
         <!-- PREVIEW -->
-        <div class="input-group">
-            <label>Preview Gambar</label>
-
-            <img id="preview" 
-                 src="<?= base_url('assets/images/'.$paket->gambar) ?>" 
-                 style="width:50%; height:300px; object-fit:cover; border-radius:10px;">
-        </div>
+ 
 
         <!-- JENIS -->
         <div class="input-group">
@@ -184,6 +211,14 @@ function previewGambar(event) {
                 <option value="Plus" <?= ($paket->jenis == 'Plus')?'selected':'' ?>>Plus</option>
                 <option value="Premium" <?= ($paket->jenis == 'Premium')?'selected':'' ?>>Premium</option>
             </select>
+        </div>
+
+       <div class="input-group">
+            <label>Preview Gambar</label>
+
+            <img id="preview" 
+                 src="<?= base_url('assets/images/'.$paket->gambar) ?>" 
+                 style="width:50%; height:300px; object-fit:cover; border-radius:10px;">
         </div>
 
     </div>

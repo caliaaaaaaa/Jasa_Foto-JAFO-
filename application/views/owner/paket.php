@@ -1,8 +1,9 @@
 <?php $this->load->view('owner/components/header'); ?>
 <?php $this->load->view('owner/components/navbar'); ?>
-
+<?php $active = 'paket'; ?>
+<?php $this->load->view('owner/components/sidebar', compact('active')); ?>
 <div class="layout">
-<?php $this->load->view('owner/components/sidebar'); ?>
+
 
 <div class="main">
 
@@ -297,7 +298,7 @@ let selectedId = null;
 // 🔥 LOAD DATA BERDASARKAN NAMA
 function showDetail(nama){
 
-    fetch("<?= base_url('kasir/get_paket_by_nama/') ?>" + encodeURIComponent(nama))
+    fetch("<?= base_url('owner/get_paket_by_nama/') ?>" + encodeURIComponent(nama))
     .then(res => res.json())
     .then(data => {
 

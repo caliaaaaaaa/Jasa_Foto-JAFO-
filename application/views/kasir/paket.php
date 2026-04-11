@@ -1,8 +1,10 @@
 <?php $this->load->view('kasir/components/header'); ?>
 <?php $this->load->view('kasir/components/navbar'); ?>
+<?php $active = 'paket'; ?>
+<?php $this->load->view('kasir/components/sidebar', compact('active')); ?>
 
 <div class="layout">
-<?php $this->load->view('kasir/components/sidebar'); ?>
+
 
 <div class="main">
 
