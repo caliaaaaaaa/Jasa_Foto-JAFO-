@@ -8,40 +8,45 @@
 
 	<div class="main">
 
-		<!-- 🔥 TARUH DI SINI -->
-		<div id="overlayError" style="
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    backdrop-filter: blur(5px);
-    background: rgba(0,0,0,0.2);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-">
-			<div style="
-        background:white;
+<!-- OVERLAY ERROR: digunakan untuk menampilkan pesan error dalam bentuk popup -->
+<div id="overlayError" style="
+		position: fixed;
+		top:0; left:0;
+		width:100%; height:100%;
+		backdrop-filter: blur(5px);
+		background: rgba(0,0,0,0.2);
+		display:none;
+		justify-content:center;
+		align-items:center;
+		z-index:9999;
+		">
+
+<!-- BOX ERROR -->
+<div style="background:white;
         padding:30px;
         border-radius:15px;
         text-align:center;
         width:300px;
-    ">
-				<p id="pesanError" style="margin-bottom:20px;"></p>
-				<button onclick="tutupOverlay()" style="
-            padding:10px 20px;
-            border:none;
-            background:#3B6FB6;
-            color:white;
-            border-radius:10px;
+    	">
+
+<!-- TEMPAT MENAMPILKAN PESAN ERROR -->
+<p id="pesanError" style="margin-bottom:20px;"></p>
+<button onclick="tutupOverlay()" 
+style="padding:10px 20px;
+        border:none;
+        background:#3B6FB6;
+         color:white;
+        border-radius:10px;
         ">OK</button>
 			</div>
 		</div>
 
 		<style>
-			/* Google Fonts Import (Opsional, agar lebih cantik) */
+
+			/* fonts import */
 			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+			/* AREA UTAMA HALAMAN */
 			.main {
 				padding: 40px;
 
@@ -51,7 +56,7 @@
 			}
 
 
-			/* CARD UTAMA */
+			/* CARD TRANSAKSI */
 			.card-transaksi {
 				background: #ffffff;
 				border-radius: 24px;
@@ -65,7 +70,8 @@
 					0 20px 50px rgba(0, 0, 0, 0.06);
 			}
 
-			/* HEADER */
+			
+			/* HEADER FORM (JUDUL + TOTAL) */
 			.header-transaksi {
 				display: flex;
 				justify-content: space-between;
@@ -82,6 +88,7 @@
 				font-size: 24px;
 			}
 
+			/* BADGE TOTAL HARGA*/
 			.total-badge {
 				background: #ebf2ff;
 				padding: 12px 24px;
@@ -94,7 +101,7 @@
 				gap: 8px;
 			}
 
-			/* CONTENT LAYOUT */
+			/* LAYOUT KIRI (GAMBAR) DAN KANAN (FORM) */
 			.content-wrapper {
 				display: grid;
 				grid-template-columns: 320px 1fr;
@@ -102,7 +109,7 @@
 				align-items: start;
 			}
 
-			/* LEFT: PREVIEW PAKET */
+			/* PREVIEW PAKET */
 			.card-paket {
 				background: #ffffff;
 				border-radius: 20px;
@@ -123,6 +130,7 @@
 				padding: 10px 5px;
 			}
 
+			/* INFO NAMA DAN HARGA PAKET */
 			.card-paket-info h4 {
 				margin: 0 0 5px 0;
 				color: #1a1d23;
@@ -137,18 +145,20 @@
 				font-size: 16px;
 			}
 
-			/* RIGHT: FORM STYLING */
+			/* GRID INPUT FORM */
 			.form-grid {
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
 				gap: 20px;
 			}
 
+			/* GROUP INPUT */
 			.input-group {
 				display: flex;
 				flex-direction: column;
 			}
 
+			/* LABEL INPUT */
 			.input-group label {
 				margin-bottom: 8px;
 				font-size: 13px;
@@ -158,6 +168,7 @@
 				letter-spacing: 0.5px;
 			}
 
+			/* INPUT BIASA */
 			.input-group input {
 				padding: 14px;
 				border-radius: 12px;
@@ -191,6 +202,7 @@
 				box-shadow: 0 0 0 4px rgba(59, 111, 182, 0.1);
 			}
 
+			/* SIMBOL RP DI DEPAN INPUT */
 			.rp-wrapper span {
 				padding: 0 15px;
 				color: #64748b;
@@ -198,6 +210,7 @@
 				font-size: 14px;
 			}
 
+			/* INPUT RP */
 			.rp-wrapper input {
 				border: none !important;
 				background: transparent !important;
@@ -206,7 +219,7 @@
 				flex: 1;
 			}
 
-			/* BUTTONS */
+			/* BAGIAN BUTTON BWH */
 			.footer-btn {
 				margin-top: 40px;
 				padding-top: 25px;
@@ -270,7 +283,7 @@
 					document.getElementById('overlayError').style.display = 'flex';
 					document.getElementById('pesanError').innerText = "<?= $this->session->flashdata('error') ?>";
 
-					hitung(); // biar uang kembali tetap ada
+					hitung();
 				});
 			</script>
 		<?php endif; ?>
@@ -279,7 +292,7 @@
 		$old = $this->session->flashdata('old');
 		?>
 
-		<!-- ❗ FORM (FIX: cuma 1 form) -->
+		<!-- FORM SIMPAN TRANSAKSI -->
 		<form method="post" action="<?= base_url('kasir/simpan_transaksi') ?>" onsubmit="return validasiSemua()">
 
 			<div class="card-transaksi">
@@ -304,7 +317,7 @@
 						</div>
 					</div>
 
-					<!-- RIGHT -->
+
 					<div>
 						<div class="form-grid">
 
@@ -313,7 +326,7 @@
 								<input type="text" value="Auto Generate" readonly>
 							</div>
 
-							<!-- 🔥 VALIDASI TANGGAL -->
+
 							<div class="input-group">
 								<label>Tanggal Acara</label>
 								<input type="date" name="tanggal" id="tanggal" onchange="cekTanggal()" required
@@ -327,7 +340,7 @@
 								<input type="text" name="nama" required value="<?= isset($old['nama']) ? $old['nama'] : '' ?>">
 							</div>
 
-							<!-- 🔥 FORMAT JAM (tanpa detik) -->
+
 							<div class="input-group">
 								<label>Jam Acara</label>
 								<input type="time" name="jam" step="60" required value="<?= isset($old['jam']) ? $old['jam'] : '' ?>">
@@ -347,7 +360,7 @@
 								<input type="text" name="lokasi" required value="<?= isset($old['lokasi']) ? $old['lokasi'] : '' ?>">
 							</div>
 
-							<!-- 🔥 BAYAR -->
+
 							<div class="input-group">
 								<label>Uang Bayar</label>
 								<div class="rp-wrapper">
@@ -358,7 +371,7 @@
 								</div>
 							</div>
 
-							<!-- 🔥 KEMBALI -->
+
 							<div class="input-group">
 								<label>Uang Kembali</label>
 								<div class="rp-wrapper">
@@ -389,12 +402,11 @@
 </div>
 
 <script>
-	// 🔥 HITUNG KEMBALI
 	function hitung() {
 		let total = parseInt(document.getElementById('total').value) || 0;
 		let bayarInput = document.getElementById('bayar').value;
 
-		// 🔥 kalau belum diisi, kosongkan kembali
+
 		if (bayarInput === '') {
 			document.getElementById('kembali').value = '';
 			document.getElementById('totalText').innerText = total.toLocaleString('id-ID');
@@ -415,7 +427,7 @@
 		document.getElementById('totalText').innerText = total.toLocaleString('id-ID');
 	}
 
-	// 🔥 VALIDASI TANGGAL (CEK KE SERVER)
+	//VALIDASI TANGGAL 
 	let tanggalValid = true;
 
 	function cekTanggal() {
@@ -436,7 +448,7 @@
 			});
 	}
 
-	// 🔥 VALIDASI FINAL (SEMUA)
+
 	function validasiSemua() {
 
 		let total = parseInt(document.getElementById('total').value) || 0;
@@ -455,13 +467,13 @@
 		return true;
 	}
 
-	// INIT TOTAL
+
 
 	window.onload = function() {
 		let totalVal = parseInt(document.getElementById('total').value) || 0;
 		document.getElementById('totalText').innerText = totalVal.toLocaleString('id-ID');
 
-		// 🔥 TAMBAHAN INI
+
 		hitung();
 	}
 

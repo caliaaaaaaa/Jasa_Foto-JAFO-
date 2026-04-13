@@ -260,7 +260,7 @@
 
     <div class="card-body">
         <h4><?= $p->nama_paket ?></h4>
-        <p>Rp <?= number_format($p->harga) ?></p>
+        <p><p>Rp <?= number_format($p->harga ?? 0) ?></p></p>
 
         <div class="btn-detail"
         onclick='showDetail(<?= json_encode($p->nama_paket) ?>)'>
@@ -319,8 +319,8 @@
 
                 <p id="d_deskripsi"></p>
 
-                <p class="durasi">⏱ <span id="d_durasi"></span></p>
-
+                <p class="durasi">⏱ Durasi: <span id="d_durasi"></span></p>
+				<p class="durasi">📦 Estimasi: <span id="d_estimasi"></span></p>
                 <h3 id="d_harga"></h3>
 
             </div>
@@ -329,6 +329,9 @@
     </div>
 
 </div>
+
+
+
 </div>
 
 <script>
@@ -349,7 +352,9 @@ function showDetail(nama){
         document.getElementById('d_kategori').innerText = "Jasa Foto " + nama;
 
         // tampil pertama
-        tampilkanJenis(paketList[0].jenis.toLowerCase());
+       if (paketList.length > 0) {
+    tampilkanJenis(paketList[0].jenis.toLowerCase());
+}
     });
 }
 
@@ -365,6 +370,7 @@ function tampilkanJenis(jenis){
     document.getElementById('d_deskripsi').innerHTML = p.deskripsi.replace(/\n/g,"<br>");
     document.getElementById('d_harga').innerText = "Rp " + parseInt(p.harga).toLocaleString();
     document.getElementById('d_durasi').innerText = p.durasi_jam + " Jam";
+	document.getElementById('d_estimasi').innerText = p.estimasi_pengerjaan;
 
     // reset
     document.getElementById('basic').classList.remove('active');

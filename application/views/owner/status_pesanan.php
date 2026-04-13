@@ -2,10 +2,10 @@
 <?php $this->load->view('owner/components/navbar'); ?>
 
 <?php $active = 'status'; ?>
-<?php $this->load->view('owner/components/sidebar', compact('active')); ?>
+<?php $this->load->view('owner/components/sidebar', compact('active')); ?> 
 
 <style>
-/* CONTAINER */
+/* CONTAINER UTAMA HALAMAN STATUS */
 .container-status {
     background: #ffffff;
     padding: 25px;
@@ -15,7 +15,7 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-/* HEADER / FILTER AREA */
+/* HEADER / AREA FILTER (SELECT + SEARCH) */
 .header-status {
     display: flex;
     justify-content: space-between;
@@ -25,7 +25,7 @@
     flex-wrap: wrap;
 }
 
-/* SEARCH & SELECT */
+/* INPUT SEARCH DAN SELECT FILTER */
 .search-box, select {
     padding: 10px 15px;
     border-radius: 12px;
@@ -35,33 +35,34 @@
     font-size: 14px;
 }
 
+/* SEARCH AKAN MENGISI SISA RUANG */
 .search-box {
     flex: 1;
     min-width: 200px;
 }
 
+/* EFEK FOCUS INPUT */
 .search-box:focus, select:focus {
     border-color: #3B6FB6;
     box-shadow: 0 0 0 3px rgba(59,111,182,0.1);
 }
 
-/* PEMBUNGKUS TABEL RESPONSIF */
+/* WRAPPER TABEL AGAR RESPONSIVE (BISA SCROLL) */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     border-radius: 12px;
 }
 
-/* TABLE */
+/* TABEL DATA */
 table {
     width: 100%;
     border-collapse: collapse;
     background: white;
-    min-width: 1000px; /* Menjaga kolom tetap rapi di layar kecil */
+    min-width: 1000px;
 }
 
-/* HEADER TABLE */
+/* HEADER KOLOM */
 th {
     background: #dfe3f2;
     padding: 14px;
@@ -71,20 +72,21 @@ th {
     white-space: nowrap;
 }
 
-/* DATA */
+/* ISI DATA */
 td {
     padding: 14px;
     text-align: center;
     font-size: 14px;
-    vertical-align: middle;
     border-bottom: 1px solid #f0f0f0;
 }
 
-/* ROW STRIP & HOVER */
+/* WARNA SELANG SELING */
 tr:nth-child(even) { background: #f9fbfd; }
+
+/* HOVER ROW */
 tr:hover { background: #f1f5ff; transition: 0.2s; }
 
-/* BADGE STATUS */
+/* BADGE STATUS (MENUNGGU, PROSES, SELESAI) */
 .badge {
     padding: 6px 14px;
     border-radius: 20px;
@@ -92,9 +94,9 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
     font-weight: 600;
     color: white;
     display: inline-block;
-    animation: fadeIn 0.3s ease;
 }
 
+/* WARNA STATUS */
 .menunggu { background: #95a5a6; }
 .proses { background: #f1c40f; }
 .selesai { background: #2ecc71; }
@@ -105,6 +107,7 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
     text-align: center;
 }
 
+/* STYLE LINK PAGINATION */
 .pagination a,
 .pagination strong {
     padding: 8px 14px;
@@ -117,18 +120,14 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
     display: inline-block;
 }
 
+/* HALAMAN AKTIF */
 .pagination strong {
     background: #3B6FB6;
     color: white;
     border: none;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* RESPONSIVE BREAKPOINT */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .header-status { flex-direction: column; align-items: stretch; }
     .search-box, select { width: 100%; }
@@ -137,10 +136,15 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
 </style>
 
 <div class="container-status">
+
+    <!-- JUDUL HALAMAN -->
     <h3 style="margin-bottom: 20px;">Status Pesanan</h3>
 
+    <!-- FORM FILTER (STATUS + SEARCH) -->
     <form method="get" action="<?= base_url('owner/status_pesanan') ?>">
         <div class="header-status">
+
+            <!-- FILTER STATUS (AUTO SUBMIT SAAT DIPILIH) -->
             <select name="status" onchange="this.form.submit()">
                 <option value="all">Semua Status</option>
                 <option value="menunggu" <?= ($filter_status == 'menunggu') ? 'selected' : '' ?>>Menunggu</option>
@@ -148,6 +152,7 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
                 <option value="selesai" <?= ($filter_status == 'selesai') ? 'selected' : '' ?>>Selesai</option>
             </select>
 
+            <!-- SEARCH BERDASARKAN NO PESANAN / NAMA -->
             <input type="text" name="keyword" class="search-box"
                 placeholder="🔍 Cari No Pesanan atau Nama..."
                 value="<?= $keyword ?>"
@@ -155,6 +160,7 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
         </div>
     </form>
 
+    <!-- TABEL DATA -->
     <div class="table-responsive">
         <table>
             <thead>
@@ -170,18 +176,46 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
                     <th>Status</th>
                 </tr>
             </thead>
+
             <tbody>
+
+                <!-- CEK DATA ADA / TIDAK -->
                 <?php if (!empty($status)): ?>
+
                     <?php $no = 1; foreach ($status as $s): ?>
                         <tr>
+
+                            <!-- NOMOR -->
                             <td><?= $no++ ?></td>
-                            <td style="font-weight: bold; color: #3B6FB6;"><?= $s->nomor_pesanan ?? '-' ?></td>
+
+                            <!-- NOMOR PESANAN -->
+                            <td style="font-weight: bold; color: #3B6FB6;">
+                                <?= $s->nomor_pesanan ?? '-' ?>
+                            </td>
+
+                            <!-- DATA CUSTOMER -->
                             <td><?= $s->nama_lengkap ?? '-' ?></td>
-                            <td><?= $s->no_hp ?? '-' ?></td>
-                            <td><?= $s->nama_paket ?? '-' ?></td>
+                            <td><?= $s->no_hp ?? '-' ?>
+
+ 						<td>
+							<?php if (!empty($s->nama_paket)): ?>
+								<span>
+									<?= $s->nama_paket ?>
+								</span>
+							<?php else: ?>
+								<span style="color:red; font-weight:bold;">
+									(Paket dihapus)
+								</span>
+							<?php endif; ?>
+						</td>
+						
                             <td><?= $s->lokasi ?? '-' ?></td>
+
+                            <!-- FORMAT TANGGAL & JAM -->
                             <td><?= date('d/m/Y', strtotime($s->tanggal_acara)) ?></td>
                             <td><?= date('H:i', strtotime($s->jam_acara)) ?></td>
+
+                            <!-- STATUS DENGAN BADGE -->
                             <td>
                                 <?php if ($s->status == 'menunggu'): ?>
                                     <span class="badge menunggu">Menunggu</span>
@@ -191,20 +225,30 @@ tr:hover { background: #f1f5ff; transition: 0.2s; }
                                     <span class="badge selesai">Selesai</span>
                                 <?php endif; ?>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
+
                 <?php else: ?>
+
+                    <!-- JIKA DATA KOSONG -->
                     <tr>
-                        <td colspan="9" style="padding: 30px; color: #888;">Data tidak ditemukan.</td>
+                        <td colspan="9" style="padding: 30px; color: #888;">
+                            Data tidak ditemukan.
+                        </td>
                     </tr>
+
                 <?php endif; ?>
+
             </tbody>
         </table>
     </div>
 
+    <!-- PAGINATION -->
     <div class="pagination">
         <?= $pagination ?>
     </div>
+
 </div>
 
-<?php $this->load->view('owner/components/footer'); ?>
+<?php $this->load->view('owner/components/footer'); ?> <!-- Footer -->

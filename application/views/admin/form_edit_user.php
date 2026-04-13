@@ -6,16 +6,6 @@
 
 <style>
 
-/* CONTAINER */
-.container-form {
-    background: #f4f6fb;
-    padding: 30px;
-    border-radius: 20px;
-    width: 95%;
-    margin: auto;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
 /* CARD FORM */
 .form-card {
     background: white;
@@ -91,13 +81,16 @@
 
 </style>
 
-<h2 style="margin-left:30px;">EDIT USER</h2>
+<br>
+<br>
+<br>
+<br>
 
 <div class="container-form">
 
     <div class="form-card">
 
-        <h3>Form Edit User</h3>
+        <h3>Edit User</h3>
 
         <form method="post" action="<?= base_url('admin/edit_user/'.$user->id_user) ?>">
 
@@ -110,6 +103,8 @@
                 <label>Nama Lengkap</label>
                 <input type="text" name="nama" value="<?= $user->nama_lengkap ?>">
             </div>
+
+			
 
 <div class="input-group">
 				<label>Password </label>

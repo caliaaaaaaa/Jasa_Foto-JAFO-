@@ -11,7 +11,6 @@ textarea {
     resize: vertical;
 }
 
-/* OPTIONAL: BIAR LEBIH PROPORSIONAL */
 .input-group textarea {
     padding: 12px;
     line-height: 1.5;
@@ -59,7 +58,7 @@ textarea {
     border-radius: 15px;
     padding: 15px;
     text-align: center;
-    height: auto; /* penting */
+    height: auto;
 }
 
 .upload-box:hover {
@@ -126,6 +125,8 @@ textarea {
 	  margin: auto;
 }
 
+/* PREVIEW GAMBAR */
+
 </style>
 
 <script>
@@ -152,24 +153,24 @@ function previewGambar(event) {
     <!-- KIRI -->
     <div>
 
-        <!-- NAMA -->
+     
         <div class="input-group">
             <label>Nama Paket</label>
             <input type="text" name="nama" value="<?= $paket->nama_paket ?>">
         </div>
-<br>
-
-        <!-- DURASI -->
+	<br>
         <div class="input-group">
             <label>Durasi Pemotretan</label>
             <input type="number" name="durasi" value="<?= $paket->durasi_jam ?>">
         </div>
 
-        <!-- UPLOAD -->
+
+		  
+
    <div class="input-group">
                         <label>Foto Paket</label>
                         <div class="upload-box">
-                            <p>Format: JPG, PNG, WEBP </p>
+                            <p>Format: JPG & PNG </p>
                             <input type="file" name="gambar" id="gambarInput" onchange="previewGambar(event)" style="display:none;">
                             <button type="button" class="btn-upload-custom" onclick="document.getElementById('gambarInput').click()">
                                 <i class="fa fa-cloud-upload"></i> Pilih Gambar
@@ -177,7 +178,6 @@ function previewGambar(event) {
                         </div>
                     </div>
 
-        <!-- DESKRIPSI -->
         <div class="input-group">
             <label>Deskripsi Paket</label>
             <textarea name="deskripsi"><?= $paket->deskripsi ?></textarea>
@@ -192,7 +192,7 @@ function previewGambar(event) {
 
         <div class="input-group">
             <label>Estimasi Pengerjaan</label>
-            <input type="text" name="estimasi" value="<?= $paket->durasi_jam ?> Jam">
+           <input type="text" name="estimasi" value="<?= $paket->estimasi_pengerjaan ?>">
         </div>
 
         <div class="input-group">
@@ -200,10 +200,7 @@ function previewGambar(event) {
             <input type="number" name="harga" value="<?= $paket->harga ?>">
         </div>
 
-        <!-- PREVIEW -->
- 
-
-        <!-- JENIS -->
+    
         <div class="input-group">
             <label>Jenis Paket</label>
             <select name="jenis">
@@ -225,7 +222,7 @@ function previewGambar(event) {
 
 </div>
 
-<!-- 🔥 BUTTON KANAN -->
+
 <div class="btn-group">
     <button type="reset" class="btn-batal">Batal</button>
     <button type="submit" class="btn-simpan">Update</button>

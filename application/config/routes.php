@@ -57,7 +57,12 @@ $route['admin/status'] = 'admin/status_pesanan';
 $route['admin/dashboard'] = 'admin/dashboard';
 $route['admin/paket'] = 'admin/paket';
 $route['admin/form_tambah'] = 'admin/form_tambah';
-$route['admin/status'] = 'admin/status_pesanan';
 $route['admin/users'] = 'admin/users';
 $route['admin/riwayat'] = 'admin/riwayat';
-$route['admin/riwayat'] = 'admin/riwayat';
+$route['admin/edit/(:num)'] = 'admin/form_edit/$1';
+$route['admin/hapus/(:num)'] = 'admin/hapus/$1';
+$route['admin/hapus_user/(:num)'] = 'admin/hapus_user/$1';
+$route['admin/cetak/(:num)'] = 'admin/cetak_struk/$1';
+
+
+

@@ -159,7 +159,7 @@
                     <th>Paket</th>
                     <th>Tgl Transaksi</th>
                     <th>Tgl Acara</th>
-                    <th>Jam</th>
+                    <th>Jam Acara</th>
                     <th>Lokasi</th>
                     <th>Total Harga</th>
                     <th>Uang Bayar</th>
@@ -175,7 +175,17 @@
                         <td><?= $no++ ?></td>
                         <td style="font-weight: bold; color: #3B6FB6;"><?= $r->nomor_pesanan ?></td>
                         <td><?= $r->nama_lengkap ?></td>
-                        <td><?= $r->nama_paket ?></td>
+											<td>
+						<?php if (!empty($r->nama_paket)): ?>
+							<span>
+								<?= $r->nama_paket ?>
+							</span>
+						<?php else: ?>
+							<span style="color:red; font-weight:bold;">
+								(Paket dihapus)
+							</span>
+						<?php endif; ?>
+					</td>
                         <td><?= date('d/m/Y', strtotime($r->tanggal_transaksi)) ?></td>
                         <td><?= date('d/m/Y', strtotime($r->tanggal_acara)) ?></td>
                         <td><?= date('H:i', strtotime($r->jam_acara)) ?></td>

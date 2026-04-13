@@ -158,9 +158,9 @@
    <div class="box map-box">
     <h4>Lokasi Pesanan (Hari ini)</h4>
 
-    <?php if(!empty($transaksi)): 
-        $t = $transaksi[0];
-    ?>
+	<?php if(!empty($transaksi_hari_ini)): 
+		$t = $transaksi_hari_ini[0];
+	?>
 
         <iframe 
             src="https://www.google.com/maps?q=<?= urlencode($t->lokasi) ?>&output=embed"
@@ -203,21 +203,19 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    var events = [
-        <?php foreach($transaksi as $t): ?>
-        {	
-            title: "<?= $t->nama_paket ?>",
-            date: "<?= $t->tanggal_acara ?>"
-        },
-        <?php endforeach; ?>
-    ];
+	var events = <?= json_encode(array_map(function($t){
+		return [
+			"title" => $t->nama_paket,
+			"date" => $t->tanggal_acara
+		];
+	}, $semua_transaksi)); ?>;
 
     var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
         initialView: 'dayGridMonth',
         height: 400,
         events: events
     });
-			
+
     calendar.render();
 });
 </script>

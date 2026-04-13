@@ -6,13 +6,13 @@
 
 <style>
 
-/* WRAPPER */
+/* WRAPPER HALAMAN UTAMA */
 .page-wrapper {
     width: 95%;
     margin: 30px auto;
 }
 
-/* CARD */
+/* CARD: container utama form */
 .form-container {
     background: #ffffff;
     padding: 35px;
@@ -41,7 +41,7 @@
     gap: 25px;
 }
 
-/* INPUT GROUP */
+/* INPUT GROUP LABEL + INPUT  */
 .input-group {
     display: flex;
     flex-direction: column;
@@ -64,6 +64,7 @@
     transition: 0.3s;
 }
 
+/* efek saat input di klik */
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
@@ -76,15 +77,16 @@ textarea {
     min-height: 110px;
 }
 
-/* UPLOAD BOX */
+/* UPLOAD BOX: area upload gambar */
 .upload-box {
     border: 2px dashed #ccc;
     border-radius: 15px;
     padding: 15px;
     text-align: center;
-    height: auto; /* penting */
+    height: auto; 
 }
 
+/* efek hover upload */
 .upload-box:hover {
     border-color: #3B6FB6;
     background: #f9fbff;
@@ -155,7 +157,7 @@ textarea {
     transform: translateY(-2px);
 }
 
-/* ALERT */
+/* ALERT ERROR dari server */
 .alert-error {
     background: #ffe5e5;
     padding: 12px;
@@ -164,16 +166,49 @@ textarea {
     margin-bottom: 20px;
 }
 
+/* PREVIEW CARD */
+.preview-card {
+    width: 100%;
+    max-width: 320px; /* biar ga kepanjangan */
+    height: 260px;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #f4f6fb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    margin-top: 5px;
+}
+
+/* GAMBAR */
+.preview-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+/* TEXT DEFAULT */
+.preview-text {
+    position: absolute;
+    color: #aaa;
+    font-size: 13px;
+}
 </style>
 
 <script>
 function previewGambar(event) {
+	 // mengambil input file
     const input = event.target;
+	// mengambil elemen img preview
     const preview = document.getElementById('preview');
-
+	// mengambil file pertama yang dipilih memey
     const file = input.files[0];
     if (file) {
         preview.src = URL.createObjectURL(file);
+		 // tampilkan gambar
         preview.style.display = 'block';
     }
 }
@@ -195,6 +230,7 @@ function previewGambar(event) {
             <h2>Kelola Paket</h2>
         </div>
 
+		<!-- form kirim ke controller -->
         <form method="post" enctype="multipart/form-data" action="<?= base_url('admin/tambah_paket') ?>">
 
             <div class="form-grid">
@@ -211,10 +247,11 @@ function previewGambar(event) {
                         <label>Durasi Pemotretan</label>
                         <input type="number" name="durasi" value="<?= $old['durasi'] ?? '' ?>">
                     </div>
-<div class="input-group">
+
+					<div class="input-group">
                         <label>Foto Paket</label>
                         <div class="upload-box">
-                            <p>Format: JPG, PNG, WEBP </p>
+                            <p>Format: JPG & PNG </p>
                             <input type="file" name="gambar" id="gambarInput" onchange="previewGambar(event)" style="display:none;">
                             <button type="button" class="btn-upload-custom" onclick="document.getElementById('gambarInput').click()">
                                 <i class="fa fa-cloud-upload"></i> Pilih Gambar
@@ -232,21 +269,17 @@ function previewGambar(event) {
                 <!-- KANAN -->
                 <div>
 
-                    <div class="input-group">
-                        <label>Estimasi Pengerjaan</label>
-                        <input type="text" name="estimasi" value="<?= $old['estimasi'] ?? '' ?>">
-                    </div>
+				<div class="input-group">
+					<label>Estimasi Pengerjaan</label>
+					<input type="text" name="estimasi" value="<?= $old['estimasi'] ?? '' ?>" placeholder="contoh: 1-3 hari">
+				</div>
 
                     <div class="input-group">
                         <label>Harga Paket</label>
                         <input type="number" name="harga" value="<?= $old['harga'] ?? '' ?>">
                     </div>
 
-                    <div class="input-group">
-                        <label>Preview Gambar</label>
-
-                        <img id="preview" class="preview-img" src="">
-                    </div>
+                   
 
                     <div class="input-group">
                         <label>Jenis Paket</label>
@@ -257,14 +290,15 @@ function previewGambar(event) {
                         </select>
                     </div>
 
-                    <div class="input-group">
-                        <label>Preview Gambar</label>
+                 <div class="input-group">
+				<label>Preview Gambar</label>
 
-                        <img id="preview" class="preview-img" src="">
-                    </div>
-                </div>
+					<div class="preview-card">
+						<img id="preview" src="">
+						<span class="preview-text">Preview akan tampil di sini</span>
+					</div>
 
-            </div>
+		</div>
 
             <div class="btn-group">
                 <button type="reset" class="btn-batal">Batal</button>
@@ -276,5 +310,25 @@ function previewGambar(event) {
     </div>
 
 </div>
+
+		<script>
+			// fungsi untuk preview gambar sebelum diupload
+		function previewGambar(event) {
+			 // mengambil input file
+			const input = event.target;
+			// ambil elemen gambar preview
+			const preview = document.getElementById('preview');
+			// ambil elemen teks preview default
+			const text = document.querySelector('.preview-text');
+
+			// mengambil file pertama yang dipilih
+			const file = input.files[0];
+			if (file) {
+				preview.src = URL.createObjectURL(file);
+				preview.style.display = 'block';
+				text.style.display = 'none';
+			}
+		}
+		</script>
 
 <?php $this->load->view('admin/components/footer'); ?>
